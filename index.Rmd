@@ -24,7 +24,9 @@ When you click the **Knit** button a document will be generated that includes bo
 ## Slide with R Output
 
 ```{r cars, echo = TRUE}
-summary(cars)
+df <- read.csv("data/volcano.csv")
+library(plotly)
+plot_ly(df,x=df$Country,y=sum(as.numeric(df$risk),na.rm = TRUE),mode="markers")
 ```
 
 ## Slide with Plot
