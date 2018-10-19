@@ -3,6 +3,8 @@ title: "Untitled"
 author: "Olga Lukasevych"
 date: "October 18, 2018"
 output: ioslides_presentation
+width: 1440
+height: 900
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +20,7 @@ When you click the **Knit** button a document will be generated that includes bo
 
 ## Quantity of the highest risk volcano in countries
 
-```{r cars, echo = FALSE,warning=FALSE,message=FALSE}
+```{r high risk, echo = FALSE,warning=FALSE,message=FALSE}
 df <- read.csv("data/volcano.csv",stringsAsFactors = FALSE)
 library(plotly)
 library(tidyverse)
@@ -27,3 +29,7 @@ z <- risk3 %>% count(risk,Country) %>% arrange(desc(n))
 plot_ly(z,x=factor(z$Country,levels=z$Country),y=z$n,type = "bar")
 ```
 
+##
+```{r Indonesia,echo = FALSE,warning=FALSE,message=FALSE}
+
+```
