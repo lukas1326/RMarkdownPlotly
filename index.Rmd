@@ -22,6 +22,7 @@ When you click the **Knit** button a document will be generated that includes bo
 
 ```{r high risk, echo = FALSE,warning=FALSE,message=FALSE}
 df <- read.csv("data/volcano.csv",stringsAsFactors = FALSE)
+air <- read.csv("data/avia_tf_aca_1_Data.csv",stringsAsFactors = FALSE)
 library(plotly)
 library(tidyverse)
 risk3 <- df %>% filter(risk=="3")
