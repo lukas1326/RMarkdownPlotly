@@ -26,11 +26,19 @@ df <- read.csv("data/volcano.csv",stringsAsFactors = FALSE)
 library(plotly)
 library(tidyverse)
 risk3 <- df %>% filter(risk=="3")
-z <- risk3 %>% count(risk,Country) %>% arrange(desc(n)) %>% top_n(10)
+z <- risk3 %>% count(risk,Country) %>% arrange(desc(n)) %>% top_n(5)
 plot_ly(z,x=factor(z$Country,levels=z$Country),y=z$n,type = "bar")
 ```
 
 ##
 ```{r Indonesia,echo = FALSE,warning=FALSE,message=FALSE}
+##open data url and create data directory, download data
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "http://api.worldbank.org/v2/en/indicator/AG.LND.TOTL.K2?downloadformat=csv"
+download.file(fileUrl,destfile="./data/Dataset.zip",mode = "wb")
+
+##unzip downloaded file
+DatasetFiles<-unzip("./data/Dataset.zip" , exdir = "data")
+area <-read.delim (DatasetFiles[2],skip = 3,header = 3)
 
 ```
