@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Volcano Risk from Global Volcano Model"
 author: "Olga Lukasevych"
 date: "October 18, 2018"
 output:
@@ -13,7 +13,7 @@ width: 1440
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+## Volcano - population Exposure Index
 
 A comprehensive set of information on global volcanic hazard, historical events, population exposure, vulnerability, and impact has been provided to GAR15 by Global Volcano Model (GVM) and The International Association of Volcanology and Chemistry of the Earth’s Interior (IAVCEI). This work is the first of its kind in global coverage and level of contribution from a wide network of experts and institutions around the world.https://data.humdata.org/dataset/volcano-population-exposure-index-gvm
 
@@ -29,7 +29,10 @@ z <- risk3 %>% count(risk,Country) %>% arrange(desc(n)) %>% top_n(5)
 plot_ly(z,x=factor(z$Country,levels=z$Country),y=z$n,type = "bar")
 ```
 
-##
+## Indonesia
+Explore the volcano activity in Indonesia
+
+
 ```{r Indonesia,echo = FALSE,warning=FALSE,message=FALSE}
 risk3 <- risk3 %>% filter(Country=="Indonesia")
 # geo styling
@@ -40,20 +43,19 @@ g <- list(
         center = list(lon=median(risk3$Longitude),lat=median(risk3$Latitude)),
         landcolor = toRGB("gray95"),
         subunitcolor = toRGB("gray85"),
-        countrycolor = toRGB("gray85"),
+        countrycolor = toRGB("blue"),
         countrywidth = 1,
         subunitwidth = 0.5
 )
 
 p <- plot_geo(risk3, lat = ~Latitude, lon = ~Longitude) %>%
         add_markers(
-                text = ~V_Name) %>% 
-               
-        #colorbar(title = "Incoming flights<br />February 2011") %>%
+        text = ~V_Name,name=~V_Name) %>% 
         layout(
                 title = 'Indonesia Volcanos',
                 geo = g
-        )
+        ) 
+        
 p
   
 ```
