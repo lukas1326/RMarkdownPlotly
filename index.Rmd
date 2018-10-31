@@ -2,9 +2,11 @@
 title: "Untitled"
 author: "Olga Lukasevych"
 date: "October 18, 2018"
-output: ioslides_presentation
-width: 1440
+output:
+  ioslides_presentation: default
+  slidy_presentation: default
 height: 900
+width: 1440
 ---
 
 ```{r setup, include=FALSE}
@@ -13,10 +15,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## R Markdown
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
-
+A comprehensive set of information on global volcanic hazard, historical events, population exposure, vulnerability, and impact has been provided to GAR15 by Global Volcano Model (GVM) and The International Association of Volcanology and Chemistry of the Earth’s Interior (IAVCEI). This work is the first of its kind in global coverage and level of contribution from a wide network of experts and institutions around the world.https://data.humdata.org/dataset/volcano-population-exposure-index-gvm
 
 ## Quantity of the highest risk volcano in countries
 
@@ -32,13 +31,29 @@ plot_ly(z,x=factor(z$Country,levels=z$Country),y=z$n,type = "bar")
 
 ##
 ```{r Indonesia,echo = FALSE,warning=FALSE,message=FALSE}
-##open data url and create data directory, download data
-if(!file.exists("./data")){dir.create("./data")}
-fileUrl <- "http://api.worldbank.org/v2/en/indicator/AG.LND.TOTL.K2?downloadformat=csv"
-download.file(fileUrl,destfile="./data/Dataset.zip",mode = "wb")
+risk3 <- risk3 %>% filter(Country=="Indonesia")
+# geo styling
+g <- list(
+        scope = 'asia',
+        #projection = list(type = 'albers indonesia'),
+        showland = TRUE,
+        center = list(lon=median(risk3$Longitude),lat=median(risk3$Latitude)),
+        landcolor = toRGB("gray95"),
+        subunitcolor = toRGB("gray85"),
+        countrycolor = toRGB("gray85"),
+        countrywidth = 1,
+        subunitwidth = 0.5
+)
 
-##unzip downloaded file
-DatasetFiles<-unzip("./data/Dataset.zip" , exdir = "data")
-area <-read.delim (DatasetFiles[2],skip = 3,header = 3)
-
+p <- plot_geo(risk3, lat = ~Latitude, lon = ~Longitude) %>%
+        add_markers(
+                text = ~V_Name) %>% 
+               
+        #colorbar(title = "Incoming flights<br />February 2011") %>%
+        layout(
+                title = 'Indonesia Volcanos',
+                geo = g
+        )
+p
+  
 ```
